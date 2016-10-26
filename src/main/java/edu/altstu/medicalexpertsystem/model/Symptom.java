@@ -31,18 +31,18 @@ public class Symptom extends MedicalObject<Integer> {
 
     public void setDiseases(List<MedicalDependency> dependencies) {
         this.dependencies.addAll(dependencies);
+        recountPossibleDiseases();
+    }
+
+    public void recountPossibleDiseases() {
         possibleDiseases = this.dependencies
                 .stream()
                 .map(dep -> dep.getDisease())
                 .mapToInt(dis -> dis.isCanBeRightDisease() ? 1 : 0)
                 .sum();
-    }
-
-    public void reducePossibleDiseases() {
         if (possibleDiseases == 0) {
-            throw new IllegalArgumentException("Количество возможных болезней не может быть меньше 0");
+            shouldBeAsked = false;
         }
-        possibleDiseases--;
     }
 
     public Symptom(Integer id, String title) {

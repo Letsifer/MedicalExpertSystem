@@ -43,18 +43,31 @@ public class MedicalDependency {
         if (answer.getCurrentAnswer() == 0) {
             return;
         }
-        double  old = disease.getCurrentFrequency(),
-                reverseOld = 1 - old,
-                k = answer.getCurrentAnswer(),
-                apriori = disease.getAprioriFrequency();
+        double k = answer.getCurrentAnswer();
         if (k > 0) {
-            double maxPos = diseaseWithSymptom * old / (diseaseWithSymptom * old + noDiseaseWithSymptom * reverseOld);
-            double newPos = (k * maxPos - apriori * (Answer.MAX_RANGE - k)) / Answer.MAX_RANGE;
+            double newPos = countMaxPossibility(k);
             disease.setCurrentFrequency(newPos);
         } else {
-            double minPos = diseaseWithNoSymptom() * old / (diseaseWithNoSymptom() * old + noDiseaseWithNoSymptom() * reverseOld);
-            double newPos = (apriori * (Answer.MAX_RANGE + k) - k * minPos) / Answer.MAX_RANGE;
+            double newPos = countMinPossibility(k);
             disease.setCurrentFrequency(newPos);
         }
+    }
+
+    public double countMaxPossibility(double k) {
+        double old = disease.getCurrentFrequency();
+        double reverseOld = 1 - old,
+                apriori = disease.getAprioriFrequency();
+        double maxPos = diseaseWithSymptom * old / (diseaseWithSymptom * old + noDiseaseWithSymptom * reverseOld);
+        double pos = (k * maxPos - apriori * (Answer.MAX_RANGE - k)) / Answer.MAX_RANGE;
+        return pos;
+    }
+
+    public double countMinPossibility(double k) {
+        double old = disease.getCurrentFrequency();
+        double reverseOld = 1 - old,
+                apriori = disease.getAprioriFrequency();
+        double minPos = diseaseWithNoSymptom() * old / (diseaseWithNoSymptom() * old + noDiseaseWithNoSymptom() * reverseOld);
+        double pos = (apriori * (Answer.MAX_RANGE + k) - k * minPos) / Answer.MAX_RANGE;
+        return pos;
     }
 }
