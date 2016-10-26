@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import lombok.Getter;
 import lombok.Setter;
-import static java.lang.Math.max;
-import static java.lang.Math.min;
 import java.util.Arrays;
 
 /**

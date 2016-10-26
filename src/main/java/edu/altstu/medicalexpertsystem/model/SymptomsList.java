@@ -7,9 +7,20 @@ import java.util.List;
  *
  * @author Евгений
  */
-public class SymptomsList {
+public class SymptomsList extends MedicalObject<Integer>{
 
     private List<Symptom> symptoms;
+
+    public SymptomsList() {
+        super(0);
+    }
+
+    @Override
+    public void initObject() {
+        symptoms
+                .stream()
+                .forEach(s -> s.initObject());
+    }
 
     public Symptom getMostSignificantQuestion() {
         Symptom question = symptoms.stream()

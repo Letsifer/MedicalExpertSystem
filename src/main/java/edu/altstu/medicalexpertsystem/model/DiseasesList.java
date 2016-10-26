@@ -2,14 +2,27 @@ package edu.altstu.medicalexpertsystem.model;
 
 import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  *
  * @author Евгений
  */
-public class DiseasesList {
+public class DiseasesList extends MedicalObject<Integer> {
+
     private List<Disease> diseases;
-    
+
+    public DiseasesList() {
+        super(0);
+    }
+
+    @Override
+    public void initObject() {
+        diseases
+                .stream()
+                .forEach(d -> d.initObject());
+    }
+
     public Disease updateAndFindCurrentMaxPossible(Symptom symptom, Answer answer) {
         symptom.updateDiseasesPosterioriPossibilities(answer);
         return diseases.stream()
@@ -17,7 +30,7 @@ public class DiseasesList {
                 .max(Comparator.comparing(Disease::getCurrentFrequency))
                 .get();
     }
-    
+
     public boolean updateRightDiseases() {
         int leastDeseasesNumber = diseases.stream()
                 .mapToInt(d -> d.isCanBeRightDisease() ? 1 : 0)
@@ -41,5 +54,11 @@ public class DiseasesList {
         return diseases.stream()
                 .mapToInt(d -> d.isCanBeRightDisease() ? 1 : 0)
                 .sum() > 1;
+    }
+
+    public List<Disease> getLeastDiseases() {
+        return diseases.stream()
+                .filter(d -> d.isCanBeRightDisease())
+                .collect(Collectors.toList());
     }
 }

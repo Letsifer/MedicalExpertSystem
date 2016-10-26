@@ -60,6 +60,7 @@ public class Symptom extends MedicalObject<Integer> {
     @Override
     public void initObject() {
         shouldBeAsked = true;
+        recountPossibleDiseases();
     }
 
 }

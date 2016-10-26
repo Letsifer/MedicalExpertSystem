@@ -14,7 +14,7 @@ public abstract class MedicalObject<T> {
         this.id = id;
     }
     
-    void initObject() {
+    public  void initObject() {
         
     }
 }
