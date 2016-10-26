@@ -1,5 +1,7 @@
 package edu.altstu.medicalexpertsystem.model;
 
+import java.util.ArrayList;
+import java.util.List;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -18,6 +20,8 @@ public class Disease extends MedicalObject{
     
     private double currentFrequency;
     
+    private List<MedicalDependency> dependencies = new ArrayList<>();
+    
     public Disease(Integer id, String title) {
         super(id);
         this.title = title;
@@ -34,6 +38,10 @@ public class Disease extends MedicalObject{
     public void initObject() {
         canBeRightDisease = true;
         currentFrequency = aprioriFrequency;
+    }
+    
+    public void updateCurrentFrequency(Answer answer) {
+        
     }
     
 }
