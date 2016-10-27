@@ -1,5 +1,6 @@
 package edu.altstu.medicalexpertsystem.model;
 
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -14,8 +15,13 @@ public class DiseasesList extends MedicalObject<Integer> {
 
     public DiseasesList() {
         super(0);
+        diseases = new ArrayList<>();
     }
 
+    public void addDisease(Disease disease) {
+        diseases.add(disease);
+    }
+    
     @Override
     public void initObject() {
         diseases
@@ -53,7 +59,7 @@ public class DiseasesList extends MedicalObject<Integer> {
         }
         return diseases.stream()
                 .mapToInt(d -> d.isCanBeRightDisease() ? 1 : 0)
-                .sum() > 1;
+                .sum() <= 1;
     }
 
     public List<Disease> getLeastDiseases() {

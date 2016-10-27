@@ -29,6 +29,11 @@ public class Symptom extends MedicalObject<Integer> {
     private int possibleDiseases = 0;
     private List<MedicalDependency> dependencies = new ArrayList<>();
 
+    public void addDependency(MedicalDependency dependency) {
+        dependencies.add(dependency);
+        recountPossibleDiseases();
+    }
+    
     public void setDiseases(List<MedicalDependency> dependencies) {
         this.dependencies.addAll(dependencies);
         recountPossibleDiseases();
@@ -63,4 +68,8 @@ public class Symptom extends MedicalObject<Integer> {
         recountPossibleDiseases();
     }
 
+    @Override
+    public String toString() {
+        return "Symptom{" + title + '}';
+    }
 }

@@ -24,6 +24,10 @@ public class Disease extends MedicalObject {
 
     private List<MedicalDependency> dependencies = new ArrayList<>();
 
+    public void addDependency(MedicalDependency dependency) {
+        dependencies.add(dependency);
+    }
+    
     public Disease(Integer id, String title) {
         super(id);
         this.title = title;
@@ -68,6 +72,11 @@ public class Disease extends MedicalObject {
         return Arrays.stream(values)
                 .min()
                 .getAsDouble();
+    }
+
+    @Override
+    public String toString() {
+        return "Disease{" + "title=" + title + ", aprioriFrequency=" + aprioriFrequency + '}';
     }
 
 }

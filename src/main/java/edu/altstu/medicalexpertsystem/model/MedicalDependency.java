@@ -24,9 +24,13 @@ public class MedicalDependency {
         this.symptom = symptom;
     }
 
+    @Override
+    public String toString() {
+        return "MedicalDependency{" + "disease=" + disease.getTitle() + ", symptom=" + symptom.getTitle() + ", diseaseWithSymptom=" + diseaseWithSymptom + ", noDiseaseWithSymptom=" + noDiseaseWithSymptom + '}';
+    }
+    
     public MedicalDependency(Disease disease, Symptom symptom, double diseaseWithSymptom, double noDiseaseWithSymptom) {
-        this.disease = disease;
-        this.symptom = symptom;
+        this(disease, symptom);
         this.diseaseWithSymptom = diseaseWithSymptom;
         this.noDiseaseWithSymptom = noDiseaseWithSymptom;
     }

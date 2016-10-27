@@ -1,5 +1,6 @@
 package edu.altstu.medicalexpertsystem.model;
 
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
@@ -11,8 +12,24 @@ public class SymptomsList extends MedicalObject<Integer>{
 
     private List<Symptom> symptoms;
 
+    public void addSymptom(Symptom symptom) {
+        symptoms.add(symptom);
+    }
+    
+    public int getSymptomsNumber() {
+        return symptoms.size();
+    }
+    
+    public Symptom getSymptomWithId(Integer id) {
+        return symptoms.stream()
+                .filter(s -> s.getId().equals(id))
+                .findFirst()
+                .orElse(null);
+    }
+    
     public SymptomsList() {
         super(0);
+        symptoms = new ArrayList<>();
     }
 
     @Override
@@ -32,12 +49,10 @@ public class SymptomsList extends MedicalObject<Integer>{
     }
 
     public boolean updateSymptomsPossibleDiseases() {
-        symptoms.stream()
-                .filter(s -> s.isShouldBeAsked())
-                .forEach(s -> s.recountPossibleDiseases());
         return symptoms.stream()
                 .filter(s -> s.isShouldBeAsked())
+                .peek(s -> s.recountPossibleDiseases())
                 .mapToInt(s -> s.getPossibleDiseases() > 0 ? 1 : 0)
-                .sum() > 0;
+                .sum() == 0;                
     }
 }
